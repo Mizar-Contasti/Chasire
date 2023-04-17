@@ -9,7 +9,7 @@
 .cache-loader
 babel.config.js
 docosaurus.config.js
-sidebars.js
+
 
 
 # Misc
