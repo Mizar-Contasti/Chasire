@@ -9,13 +9,11 @@ import TabItem from "@theme/TabItem";
 
 Chasire has many useful Functions that can help us handle Dialogflow's Request in our backend and provide a good response.
 
-## Chasire Functions
-
-### Intents
+## Intents
 
 These Functions help us to handle Intents
 
-#### Intent
+### intent
 
 <Tabs>
 <TabItem value="php" label="PHP">
@@ -65,37 +63,11 @@ const basics = (body, intentName) => {
 </TabItem>
 </Tabs>
 
-#### Action
-
-> - Receives the name of an action and returns true or false, is used in IF statements to filter intents.
-> - You can use action as other filter to work with specific rules for some intents.
-
-<Tabs>
-<TabItem value="php" label="PHP">
-
-```php
-if(action('actionName')){
-    //Do some code
-}
-```
-
-</TabItem>
-<TabItem value="nodejs" label="Node.js">
-
-```js
-ALPHA;
-```
-
-</TabItem>
-</Tabs>
-
-.
-
-### Parameters
+## Parameters
 
 These functions are used to handle Parameters
 
-#### getIntentParameter
+### getParameter
 
 > - Returns the value of the specified Parameter in the living Intent
 
@@ -103,61 +75,24 @@ These functions are used to handle Parameters
 <TabItem value="php" label="PHP">
 
 ```php
-$parameterValue = getIntentParameter()['parameterName'];
+$parameterValue = getParameter()['parameterName'];
 ```
 
 </TabItem>
 <TabItem value="nodejs" label="Node.js">
 
 ```js
-parameterValue = getIntentParameter(body)["parameterName"];
+parameterValue = getParameter(body)["parameterName"];
 ```
 
 </TabItem>
 </Tabs>
 
-#### getContextParameter
-
-:::tip Keep in Mind
-
-When going deep into context, check Contexts section in Chasire Advanced
-
-:::
-
-> - Returns the value of the specified Parameter and Context
-> - Receives a Number as the index of the specified Context when the variable is living
-> - You can pass "auto" as parameter to retrieve the main context if you are not able to retrieve correctly your context: Example ( getContextParameter(auto)['parameterName']; )
-
-<Tabs>
-<TabItem value="php" label="PHP">
-
-```php
-// Pass context index as a number if you want that specific context and you know how contexts works Ex: 0
-$parameterValue = getContextParameter(0)['parameterName'];
-// Pass context index as "auto" to retrieve your context
-$parameterValue = getContextParameter("auto")['parameterName'];
-```
-
-</TabItem>
-<TabItem value="nodejs" label="Node.js">
-
-```js
-// Pass context index as a number if you want that specific context and you know how contexts works Ex: 0
-parameterValue = getContextParameter(body, 0)["parameterName"];
-// Pass context index as "auto" to retrieve your context
-parameterValue = getContextParameter(body, "auto")["parameterName"];
-```
-
-</TabItem>
-</Tabs>
-
-.
-
-### Triggers
+## Triggers
 
 These functions help us to Trigger Special Behaviors on our Chatbot from the Backend
 
-#### triggerEvent
+### triggerEvent
 
 - Triggers the Intent that has the event typed as argument
 - Receives the Event name and Params as Array
@@ -188,7 +123,7 @@ result = triggerEvent(eventName, params);
 </TabItem>
 </Tabs>
 
-#### triggerError
+### triggerError
 
 > - Displays an Error, works for all the integrations.
 > - Receives as Array, the name of the intent and the message of the error to trigger.
@@ -224,7 +159,7 @@ result = triggerError(context, contextBody, intentName, errorMessage, params);
 </TabItem>
 </Tabs>
 
-#### triggerPrompt
+### triggerPrompt
 
 > - Triggers a Prompt when needed, has the same format as the default required parameters that dialogflow has.
 > - Its used in Addition with SlotFilling (Check Documentation for SlotFilling).
@@ -259,168 +194,11 @@ result = triggerPropmt(context, contextBody, prompt);
 
 .
 
-### Context
-
-Context help us to save information, with these backend functions we can create and update variables on an specific context.
-
-> - Be noticed that we cant delete variables neither contexts. Just create and update.
-> - To have a whole picture of how Context works, check Context on Chasire's Advanced.
-
-#### setContextParameter
-
-> - This Function allow us to add a Parameter to the Selected Context.
-> - You can pass "auto" as a replace of the contextIndex number you want to retrieve the main context and create new parameters on it
-
-<Tabs>
-<TabItem value="php" label="PHP">
-
-```php
-$contextIndex = [0];
-$variableName = ["fruit"];
-$variableValue = ["coco"];
-
-$contextBody = setContextParameter($contextIndex,$variableName,$variableValue);
-```
-
-</TabItem>
-<TabItem value="nodejs" label="Node.js">
-
-```js
-contextIndex = [0];
-variableName = ["fruit"];
-variableValue = ["coco"];
-
-contextBody = setContextParameter(
-  body,
-  variableName,
-  variableValue
-  contextIndex,
-);
-```
-
-</TabItem>
-</Tabs>
-
-#### updateContextParameter
-
-> - This functions allow us to update the value of a parameter inside of the selected context.
-> - You can pass "auto" as a replace of the contextIndex number you want to retrieve the main context and update it
-
-<Tabs>
-<TabItem value="php" label="PHP">
-
-```php
-$contextIndex = [0];
-$variableName = ["fruit"];
-$variableValue = ["Banana"];
-
-$contextBody = updateContextParameter($contextIndex,$variableName,$variableValue);
-```
-
-</TabItem>
-<TabItem value="nodejs" label="Node.js">
-
-```js
-contextIndex = [0];
-variableName = ["fruit"];
-variableValue = ["Banana"];
-
-contextBody = updateContextParameter(
-  body,
-  variableName,
-  variableValue,
-  contextIndex
-);
-```
-
-</TabItem>
-</Tabs>
-
-#### setContextParameters
-
-> - Creates multiple values on the selected Context.
-> - You can pass "auto" as a replace of the contextIndex number you want to retrieve the main context and create new parameters inside of it
-
-<Tabs>
-<TabItem value="php" label="PHP">
-
-```php
-$contextIndex = [0];
-
-$parameters = [
-    'color' => 'white',
-    'animal' => 'bird',
-    'coffee' => 'expresso'
-];
-
-$contextBody = setContextParameters($contextIndex, $parameters);
-```
-
-</TabItem>
-<TabItem value="nodejs" label="Node.js">
-
-```js
-contextIndex = [0];
-
-parameters = [
-    'color' => 'white',
-    'animal' => 'bird',
-    'coffee' => 'expresso'
-];
-
-contextBody = setContextParameters(body,parameters,contextIndex);
-```
-
-</TabItem>
-</Tabs>
-
-#### updateContextParameters
-
-> - Updates multiples values on the selected context.
-> - You can pass "auto" as a replace of the contextIndex number you want to retrieve the main context and create new parameters inside of it
-
-<Tabs>
-<TabItem value="php" label="PHP">
-
-```php
-$contextIndex = [0];
-
-$parameters = [
-    'color' => 'black',
-    'fruit' => 'apple',
-    'coffee' => 'capuccinno',
-    'animal' => 'gorilla'
-];
-
-$contextBody = updateContextParameters($contextIndex, $parameters);
-```
-
-</TabItem>
-<TabItem value="nodejs" label="Node.js">
-
-```js
-contextIndex = [0];
-
-parameters = [
-    'color' => 'black',
-    'fruit' => 'apple',
-    'coffee' => 'capuccinno',
-    'animal' => 'gorilla'
-];
-
-contextBody = updateContextParameters(body,parameters,contextIndex);
-```
-
-</TabItem>
-</Tabs>
-
-.
-
-### Troubleshoot
+## Troubleshoot
 
 In order to Troubleshoot we can use some functions. (Check troubleshoot section for more info)
 
-#### getInput
+### getInput
 
 > - Returns the Entire input Request that Dialogflow has sent
 > - This input helps you to look at the body and troubleshoot.
@@ -444,7 +222,7 @@ result = getInput(data);
 </TabItem>
 </Tabs>
 
-#### createInput
+### createInput
 
 > - This function allow us to create a file.txt on ourServer with all the Request.
 > - Receives an array with the name of the file that you would like to create.
@@ -453,8 +231,7 @@ result = getInput(data);
 <TabItem value="php" label="PHP">
 
 ```php
-$fileName = ["request"];
-createInput($fileName);
+createInput([$fileName]);
 ```
 
 </TabItem>
@@ -470,7 +247,7 @@ createInput(data, fileName);
 </TabItem>
 </Tabs>
 
-#### getSourceData
+### getSourceData
 
 > - This function allow us to create file with the data that comes from a Different Source that isnt Dialogflow.
 > - Receives an array with the name of the file that you would like to create.
@@ -479,8 +256,8 @@ createInput(data, fileName);
 <TabItem value="php" label="PHP">
 
 ```php
-$fileName = ["request"];
-getSourceData($fileName);
+
+getSourceData([$fileName]);
 ```
 
 </TabItem>
@@ -496,35 +273,11 @@ getSourceData(data, fileName);
 </TabItem>
 </Tabs>
 
-#### getTimeOut
-
-> - Returns the time in ms that took all code execution to be done.
-> - getTimeOut can't take ms that cost the request in being proccesed by Dialogflow (**4000 ms**).
-
-<Tabs>
-<TabItem value="php" label="PHP">
-
-```php
-$time = getTimeOut();
-```
-
-</TabItem>
-<TabItem value="nodejs" label="Node.js">
-
-```js
-ALPHA;
-```
-
-</TabItem>
-</Tabs>
-
-.
-
-### Miscelaneous
+## Miscelaneous
 
 These functions are not commonly used, but sometimes are helpfull.
 
-#### getUserInput
+### getUserInput
 
 > - Returns the Input from the user that Triggered the intent
 
@@ -540,115 +293,6 @@ $userInput = getUserInput();
 
 ```js
 ALPHA;
-```
-
-</TabItem>
-</Tabs>
-
-#### getSessionID
-
-> - Returns the sessionId of the current chat/session
-> - Id format changes depending of the platform/integration
-
-<Tabs>
-<TabItem value="php" label="PHP">
-
-```php
-$sessionId = getSessionId();
-```
-
-</TabItem>
-<TabItem value="nodejs" label="Node.js">
-
-```js
-sessionId = getSessionId(body);
-```
-
-</TabItem>
-</Tabs>
-
-#### getProjectName
-
-> - Retrieves the name of the project
-
-<Tabs>
-<TabItem value="php" label="PHP">
-
-```php
-$projectName = getProjectName();
-```
-
-</TabItem>
-<TabItem value="nodejs" label="Node.js">
-
-```js
-ALPHA;
-```
-
-</TabItem>
-</Tabs>
-
-#### getWhatsAppPhoneNumber
-
-> - Retrieves a WhatsApp PhoneNumber if you are in Session VIA whatsApp
-> - This data is provided for mostly wWhatsApp Providers
-
-<Tabs>
-<TabItem value="php" label="PHP">
-
-```php
-$phoneNumber = getWhatsAppPhoneNumber();
-```
-
-</TabItem>
-<TabItem value="nodejs" label="Node.js">
-
-```js
-ALPHA;
-```
-
-</TabItem>
-</Tabs>
-
-#### getTelegramChatId
-
-> - Returns the ChatId of a Telegram Chat
-> - Only obtainable if you are chatting via Telegram
-
-<Tabs>
-<TabItem value="php" label="PHP">
-
-```php
-$chatID = getTelegramChatId();
-```
-
-</TabItem>
-<TabItem value="nodejs" label="Node.js">
-
-```js
-ALPHA;
-```
-
-</TabItem>
-</Tabs>
-
-#### getTelegramCallbackQueryId
-
-> - Returns callbackqueryId of Telegram if exists
-> - Only obtainable if you are chatting via Telegram
-
-<Tabs>
-<TabItem value="php" label="PHP">
-
-```php
-$callbackQueryId = getTelegramCallbackQueryId();
-```
-
-</TabItem>
-<TabItem value="nodejs" label="Node.js">
-
-```js
-callbackQueryId = getTelegramCallbackQueryId(body);
 ```
 
 </TabItem>
