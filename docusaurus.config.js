@@ -89,7 +89,7 @@ const config = {
             type: "doc",
             docId: "chatbots",
             position: "left",
-            label: "Chatbots built with Chartress",
+            label: "Chatbots built with Chasire",
           },
 
           {
