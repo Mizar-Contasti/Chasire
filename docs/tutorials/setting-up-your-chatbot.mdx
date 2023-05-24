@@ -1,0 +1,147 @@
+---
+sidebar_position: 1
+---
+
+# Setting up your Chatbot
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+Get started by **Creating our chatbot Throught Dialogflow and Connecting to Chasire**.
+
+{/* Or **Look at this Tutorial in Spanish** with **[Mizar](h)**. */}
+
+## 1.- Create a Chatbot on Dialogflow CX
+
+First Lets Create our Chatbot on Dialogflow [**HERE**](https://dialogflow.cloud.google.com/cx/projects)
+
+> - When entering you should Create an Account on Google (If you don't have), after that you'll be moved to the Dialogflow Platform
+> - If you are new in Dialogflow I recommend this Youtube Channel that have good to know Tutorials from zero to Hero [**HERE**](https://Chasire.netlify.app)
+> - Then you Should create an Agent (Chatbot)
+> - Type a Simple Hello on the Console (Right panel) and Wait for the response
+
+If you got your Chatbot responded you Let's go to the next part!
+
+## 2.- Setting Chasire & Bot Templates
+
+Ask Chasire bot (The moon icon at the right down corner) to Download Chasire Library, try something like (I Wanna Download the library)
+Or Click [**HERE**](https://drive.google.com/drive/folders/1Zsq3zkDNc9k7Zka4p-pt6Vm0b6cPjOb0?usp=sharing)
+
+==================================================
+
+On your root folder, Unpack the file, and you will have a folder named Chatbots with Chasire and Sion(a chatbot template)
+
+.
+
+:::tip Keep in Mind
+
+Remember that you need a PHP/Nodejs server Running online
+
+:::
+
+.
+
+After that, your folders should have this order
+
+```shell
+root
+
+└───Chatbots
+    │   Chasire
+    │   Sion
+```
+
+Now, lets check that Sion (chatbot template) is requiring Chasire
+
+Inside of the Folder of your ChatbotExample you should see some folders and some files, open the file named chatbotExample.php
+
+If you imported successfully Chasire and ordered as shown before, you should see that this Chatbot is requiring Chasire, if you changed the routers/folders hierarchy, remember to change the path.
+
+<Tabs>
+<TabItem value="php" label="PHP">
+
+```php
+require_once("../Chasire/Chasire.php");
+```
+
+</TabItem>
+<TabItem value="nodejs" label="Node.js">
+
+```nodejs
+ALPHA
+```
+
+</TabItem>
+</Tabs>
+
+## 3.- Connecting Chatbot with Dialogflow
+
+Once you imported successfully, right now your ChatbotExample knows how to handle Dialogflow, so we are going to Connect our ChatbotExample Backend with Dialogflow.
+
+> - Go to Dialogflow CX, and in the option Manage enter into **Webhooks**
+> - Create a webhook
+> - In the URL path you should put the Chatbot core file, this should be  
+>   'https:// rootDomain.com/chatbots/chatbotExample/chatbot.php'
+> - We are going to use basicAuth so we need a Key and Password Values, move to your ChatbotExample Folder
+> - Inside of the **core folder** you should see a file named **variables.php** Open It!
+> - At the top there are two variables named chatbotName and chatbotPassword, these values are the key and the password
+> - So you can type in the basic Auth, then press the Blue Save button at the bottom of the Page.
+
+## 4.- Testing Chasire on Current Chatbot
+
+Right now Chasire is connected to our Chatbot that is connected to Dialogflow, we just need Test the connection and we'll be done
+
+##### Dialogflow Section
+
+> - Create a Intent named test
+> - On Training phrases put **'test'**
+> - On Responses let's create a default response of **'Test 💥'**
+> - Then go down and open the section of Fulfillment and click on **Enable Webhook Call for this Intent**
+
+##### Server Section
+
+> - Go to your Chatbot Template folder and open the Intents Folder
+> - Right here we should have all the Intents ordered by Category and other stuff that you can check on Documentation 😉
+> - Open the file named test.php, you should be able to see some code like this.
+
+<Tabs>
+<TabItem value="php" label="PHP">
+
+```php
+<?php
+if(intent('test')){
+  triggerError(false,[], ['test'],['Message from the backend'],[]);
+}
+?>
+```
+
+</TabItem>
+<TabItem value="nodejs" label="Node.js">
+
+```nodejs
+ALPHA
+```
+
+</TabItem>
+</Tabs>
+
+###### Testing on Dialogflow
+
+In order to test we should go right now to Dialogflow and type on the console the word **'test'**
+
+If we got the response of **'Message from the backend'** Congratulations.
+
+#### Errors
+
+:::danger Keep an Eye
+
+If you got haven't got anything, or an Error.
+
+> - Look at the Tutorial Again or check the [**Video Tutorial**](https://google.com)
+> - Check the [**Troubleshooting Section**](./../Chasire-advanced/troubleshooting)
+
+:::
+
+## What's next?
+
+> - Check all the Tutorials, lets Create our First Intent!
