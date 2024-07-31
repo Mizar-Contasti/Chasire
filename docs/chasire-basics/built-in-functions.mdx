@@ -9,9 +9,12 @@ import TabItem from "@theme/TabItem";
 
 Chasire has many useful Functions that can help us handle Dialogflow's Request in our backend and provide a good response.
 
-## Intents
+## Requests
 
-These Functions help us to handle Intents
+These Functions help us to handle Intents, Tags and Events
+
+- A big difference between Dialogflow ES/CX is the way they trigger actions, in ES we use Intents, in CX we use Intents, Tags and Events.
+- Keep in mind that we have a different way of building this functionality (take time to understand the tutorials regarding triggering from user to bot).
 
 ### intent
 
@@ -27,37 +30,35 @@ if(intent('intentName')){
 ```
 
 </TabItem>
-<TabItem value="nodejs" label="Node.js">
+</Tabs>
 
-- Js works in a different Way, so we need to use a different workaround to handle it.
-- In App.js we got the current intentName and then we use it on our basics handler function.
+### tag
 
-```js
-const intentName = getIntentName(body);
+<Tabs>
+<TabItem value="php" label="PHP">
 
-if (basics(body, intentName) && basics(body, intentName)?.trim !== "") {
-  res.send(basics(body, intentName));
+- Receives the name of the tag and returns true or false, is used in IF statements to do an specific behavior for an tag in our code
+
+```php
+if(tag('tagName')){
+    //Do some code
 }
 ```
 
-> - Basics file will receive these two params and will switch depending if the intent name is inside here, if that happens a case will be triggered
-> - If the intent is not inside here, it will return false and the code will be skipped next to the other handler function like (info, test)
-> - Inside of the case of every intent the dialog will be implemented.
+</TabItem>
+</Tabs>
 
-```js
-const basics = (body, intentName) => {
-  lang = getContextParameter(body, 0)["basics_language"];
+### event
 
-  switch (intentName) {
-    case "basics_fallback":
-      result = triggerEvent("basics_start");
-      return result;
+<Tabs>
+<TabItem value="php" label="PHP">
 
-    default:
-      // return `basics module break, ${intentName} was expected 💥`;
-      break;
-  }
-};
+- Receives the name of the event and returns true or false, is used in IF statements to do an specific behavior for an event in our code
+
+```php
+if(event('eventName')){
+    //Do some code
+}
 ```
 
 </TabItem>
@@ -67,22 +68,37 @@ const basics = (body, intentName) => {
 
 These functions are used to handle Parameters
 
-### getParameter
+### getSessionParameter
 
-> - Returns the value of the specified Parameter in the living Intent
+> - Returns the value of the specific parameter living in the current session.
 
 <Tabs>
 <TabItem value="php" label="PHP">
 
 ```php
-$parameterValue = getParameter()['parameterName'];
+$parameterValue = getSessionParameter()['parameterName'];
 ```
 
 </TabItem>
-<TabItem value="nodejs" label="Node.js">
+</Tabs>
 
-```js
-parameterValue = getParameter(body)["parameterName"];
+### updateSessionParameters
+
+> - Provides a Way to update Session Parameters from the code.
+> - This function loads a new session, that we have to pass as an argument into templates or prompt functions.
+
+<Tabs>
+<TabItem value="php" label="PHP">
+
+```php
+$parameters = [
+    'parameterName1' => 'parameterValue1',
+    'parameterName2' => [
+      'parameterName3' => 'parameterValue3',
+      ],
+];
+
+$session = updateSessionParameters($parameters);
 ```
 
 </TabItem>
@@ -90,70 +106,24 @@ parameterValue = getParameter(body)["parameterName"];
 
 ## Triggers
 
-These functions help us to Trigger Special Behaviors on our Chatbot from the Backend
-
-### triggerEvent
-
-- Triggers the Intent that has the event typed as argument
-- Receives the Event name and Params as Array
-- Params are optional, these params helps to send data to the context from the current intent to the nextIntent that is being trigger by this Function
-
-<Tabs>
-<TabItem value="php" label="PHP">
-
-```php
-$eventName = ["event1"];
-$params = [];
-
-triggerEvent($eventName,$params);
-```
-
-</TabItem>
-<TabItem value="nodejs" label="Node.js">
-
-> - Result statement have to be returned in the current switch case
-
-```js
-eventName = ["event1"];
-params = [];
-
-result = triggerEvent(eventName, params);
-```
-
-</TabItem>
-</Tabs>
+These functions help us to Trigger Text messages that can help to troubleshoot or to provide a better experience to the user.
 
 ### triggerError
 
 > - Displays an Error, works for all the integrations.
-> - Receives as Array, the name of the intent and the message of the error to trigger.
+> - Receives as Array, type of request, value of request, the message of the error to trigger and the Parameters functionality.
+> - Parameters are optional, if you dont want to use then just pass session as false otherwise check the parameters documentation.;
 
 <Tabs>
 <TabItem value="php" label="PHP">
 
 ```php
-$context = false;
-$contextBody = [];
-$intentName = ["intent1"];
-$errorMessage = ["Query wasnt executed 💥"];
-$params = [];
+$session = false; || $session = getSessionParameter($parameters);
+$request_type = "intent || tag || event";
+$request_value = "requestValue";
+$errorMessage = "Error Message";
 
-triggerError($context,$contextBody,$intentName,$errorMessage,$params);
-```
-
-</TabItem>
-<TabItem value="nodejs" label="Node.js">
-
-- Result statement have to be returned in the current switch case
-
-```js
-context = false;
-contextBody = [];
-intentName = ["intent1"];
-errorMessage = ["Query wasnt executed 💥"];
-params = [];
-
-result = triggerError(context, contextBody, intentName, errorMessage, params);
+triggerError($session,$request_type,$request_value,$errorMessage);
 ```
 
 </TabItem>
@@ -161,32 +131,17 @@ result = triggerError(context, contextBody, intentName, errorMessage, params);
 
 ### triggerPrompt
 
-> - Triggers a Prompt when needed, has the same format as the default required parameters that dialogflow has.
-> - Its used in Addition with SlotFilling (Check Documentation for SlotFilling).
-> - context and contextBody are optional. (Remember to check Doc for Context if you wanna use it).
+> - Displays a Prompt, works for all the integrations.
+> - Its used in Addition with SlotFilling ( Check Documentation for SlotFilling || Formfilling ). (WIP)
 
 <Tabs>
 <TabItem value="php" label="PHP">
 
 ```php
-$context = false;
-$contextbody = [];
-$prompt = ["Whats your favourite food"];
+$session = false; || $session = getSessionParameter($parameters);
+$promptMessage = "Error Message";
 
-triggerPropmt($context,$contextBody,$prompt);
-```
-
-</TabItem>
-<TabItem value="nodejs" label="Node.js">
-
-- Remember to Return the result in the current switch case
-
-```js
-context = false;
-contextbody = false;
-prompt = ["Whats your favourite food"];
-
-result = triggerPropmt(context, contextBody, prompt);
+triggerPrompt($session,$promptMessage);
 ```
 
 </TabItem>
@@ -200,7 +155,7 @@ In order to Troubleshoot we can use some functions. (Check troubleshoot section 
 
 ### getInput
 
-> - Returns the Entire input Request that Dialogflow has sent
+> - Returns the Entire input Request that Dialogflow CX has sent
 > - This input helps you to look at the body and troubleshoot.
 
 <Tabs>
@@ -211,88 +166,108 @@ $input = getInput();
 ```
 
 </TabItem>
-<TabItem value="nodejs" label="Node.js">
-
-- Result statement have to be returned in the current switch case
-
-```js
-result = getInput(data);
-```
-
-</TabItem>
 </Tabs>
 
 ### createInput
 
 > - This function allow us to create a file.txt on ourServer with all the Request.
 > - Receives an array with the name of the file that you would like to create.
+> - As soon as this function is invoked, the file is create, No need to save as a variable.
 
 <Tabs>
 <TabItem value="php" label="PHP">
 
 ```php
-createInput([$fileName]);
-```
-
-</TabItem>
-<TabItem value="nodejs" label="Node.js">
-
-- This function doesnt need to be returned or catched, just do this in case you would like to see if worked
-
-```js
-fileName = ["request"];
-createInput(data, fileName);
+createInput($fileName);
 ```
 
 </TabItem>
 </Tabs>
 
-### getSourceData
+## Advanced
 
-> - This function allow us to create file with the data that comes from a Different Source that isnt Dialogflow.
-> - Receives an array with the name of the file that you would like to create.
+These functions solve most of the problems that we can have with Dialogflow CX when managing from low level to hight level of the bot.
+
+### getCurrentRequestType
+
+> - Retrieves the type of request that Dialogflow CX has sent. Could be ( "intent" || "tag" || "event" )
+> - This function is used to handle the request in a different way depending on the type of request. Is the initial gear to manage all request that came from dialogflow.
 
 <Tabs>
 <TabItem value="php" label="PHP">
 
 ```php
-
-getSourceData([$fileName]);
-```
-
-</TabItem>
-<TabItem value="nodejs" label="Node.js">
-
-- This function doesnt need to be returned or catched, just do this in case you would like to see if worked
-
-```js
-fileName = ["request"];
-getSourceData(data, fileName);
+$requestType = getCurrentRequestType();
 ```
 
 </TabItem>
 </Tabs>
 
-## Miscelaneous
+### getIntent
 
-These functions are not commonly used, but sometimes are helpfull.
-
-### getUserInput
-
-> - Returns the Input from the user that Triggered the intent
+> - Whether the request is an intent, this function retrieves the name of the intent, if not retrieves a selected intent called 'error_intent' for troubleshooting.
 
 <Tabs>
 <TabItem value="php" label="PHP">
 
 ```php
-$userInput = getUserInput();
+$intent = getIntent();
 ```
 
 </TabItem>
-<TabItem value="nodejs" label="Node.js">
+</Tabs>
 
-```js
-ALPHA;
+### getEvent
+
+> - Whether the request is an event, this function retrieves the name of the event, if not retrieves a selected event called 'error_event' for troubleshooting.
+
+<Tabs>
+<TabItem value="php" label="PHP">
+
+```php
+$event = getEvent();
+```
+
+</TabItem>
+</Tabs>
+
+### getTag
+
+> - Whether the request is an tag, this function retrieves the name of the tag, if not retrieves a selected tag called 'error_tag' for troubleshooting.
+
+<Tabs>
+<TabItem value="php" label="PHP">
+
+```php
+$tag = getTag();
+```
+
+</TabItem>
+</Tabs>
+
+### getUserResponse
+
+> - Retrieves the user Response, otherwise returns a error message.
+
+<Tabs>
+<TabItem value="php" label="PHP">
+
+```php
+$userResponse = getUserResponse();
+```
+
+</TabItem>
+</Tabs>
+
+### getBotResponse
+
+> - Retrieves the bot Response, otherwise returns a error message.
+
+<Tabs>
+<TabItem value="php" label="PHP">
+
+```php
+$botResponse = getBotResponse();
 ```
 
 </TabItem>
