@@ -93,9 +93,10 @@ $parameterValue = getSessionParameter()['parameterName'];
 ```php
 $parameters = [
     'parameterName1' => 'parameterValue1',
-    'parameterName2' => [
-      'parameterName3' => 'parameterValue3',
-      ],
+    'parameterName2' => 
+    [
+      'parameterName3' => 'parameterValue3'
+    ],
 ];
 
 $session = updateSessionParameters($parameters);
@@ -118,12 +119,10 @@ These functions help us to Trigger Text messages that can help to troubleshoot o
 <TabItem value="php" label="PHP">
 
 ```php
-$session = false; || $session = getSessionParameter($parameters);
-$request_type = "intent || tag || event";
-$request_value = "requestValue";
-$errorMessage = "Error Message";
+$session = false; || $session = updateSessionParameters($parameters);
+$errorMessage = ["Error Message"];
 
-triggerError($session,$request_type,$request_value,$errorMessage);
+triggerError($session,$errorMessage);
 ```
 
 </TabItem>
@@ -132,16 +131,34 @@ triggerError($session,$request_type,$request_value,$errorMessage);
 ### triggerPrompt
 
 > - Displays a Prompt, works for all the integrations.
-> - Its used in Addition with SlotFilling ( Check Documentation for SlotFilling || Formfilling ). (WIP)
 
 <Tabs>
 <TabItem value="php" label="PHP">
 
 ```php
-$session = false; || $session = getSessionParameter($parameters);
+$session = false; || $session = updateSessionParameters($parameters);
 $promptMessage = "Error Message";
 
 triggerPrompt($session,$promptMessage);
+```
+
+</TabItem>
+</Tabs>
+
+
+### triggerCall
+
+> - Triggers a Transfer call.
+> - Only works for US numbers
+
+<Tabs>
+<TabItem value="php" label="PHP">
+
+```php
+$session = false; || $session = updateSessionParameters($parameters);
+$phoneNumber = "123456789";)
+
+triggerCall($session, $phoneNumber);
 ```
 
 </TabItem>
@@ -272,3 +289,34 @@ $botResponse = getBotResponse();
 
 </TabItem>
 </Tabs>
+
+
+### getIntegration
+
+> - Retrieves the platform integration (web/phone-call).
+
+<Tabs>
+<TabItem value="php" label="PHP">
+
+```php
+$integration = getIntegration();
+```
+
+</TabItem>
+</Tabs>
+
+### getPhoneNumber
+
+> - Retrieves the platform integration (web/phone-call).
+
+<Tabs>
+<TabItem value="php" label="PHP">
+
+```php
+$phoneNumber = getPhoneNumber();
+```
+
+</TabItem>
+</Tabs>
+
+

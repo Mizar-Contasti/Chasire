@@ -16,7 +16,7 @@ Get started by **Creating our chatbot Throught Dialogflow and Connecting to Chas
 First Lets Create our Chatbot on Dialogflow [**HERE**](https://dialogflow.cloud.google.com/cx/projects)
 
 > - When entering you should Create an Account on Google (If you don't have), after that you'll be moved to the Dialogflow Platform
-> - If you are new in Dialogflow I recommend this Youtube Channel that have good to know Tutorials from zero to Hero [**HERE**](https://Chasire.netlify.app)
+> - If you are new in Dialogflow I recommend this Youtube Channel that have good to know Tutorials from zero to Hero [**HERE**](https://chasire.netlify.app)
 > - Then you Should create an Agent (Chatbot)
 > - Type a Simple Hello on the Console (Right panel) and Wait for the response
 
@@ -25,7 +25,7 @@ If you got your Chatbot responded you Let's go to the next part!
 ## 2.- Setting Chasire & Bot Templates
 
 Ask Chasire bot (The moon icon at the right down corner) to Download Chasire Library, try something like (I Wanna Download the library)
-Or Click [**HERE**](https://drive.google.com/drive/folders/1Zsq3zkDNc9k7Zka4p-pt6Vm0b6cPjOb0?usp=sharing)
+Or Click [**HERE**](https://dialogflow.cloud.google.com/cx/projects)
 
 ==================================================
 
@@ -35,7 +35,7 @@ On your root folder, Unpack the file, and you will have a folder named Chatbots 
 
 :::tip Keep in Mind
 
-Remember that you need a PHP/Nodejs server Running online
+Remember that you need a PHP server Running online
 
 :::
 
@@ -62,13 +62,6 @@ If you imported successfully Chasire and ordered as shown before, you should see
 
 ```php
 require_once("../Chasire/Chasire.php");
-```
-
-</TabItem>
-<TabItem value="nodejs" label="Node.js">
-
-```nodejs
-ALPHA
 ```
 
 </TabItem>
@@ -110,16 +103,9 @@ Right now Chasire is connected to our Chatbot that is connected to Dialogflow, w
 ```php
 <?php
 if(intent('test')){
-  triggerError(false,[], ['test'],['Message from the backend'],[]);
+  triggerError(false,['Message from the backend']);
 }
 ?>
-```
-
-</TabItem>
-<TabItem value="nodejs" label="Node.js">
-
-```nodejs
-ALPHA
 ```
 
 </TabItem>
