@@ -19,13 +19,15 @@ WebTemplates are used to build nice structures in a Web Environment. These templ
 > - Available webBlocks are **accordion button card citation description file HTML image info list paragraph prompt reply video** These can be located in blocks -> webBlocks
 > - Available separators are **comma basicDivider commaDivider superDivider**
 
-> - You can build a structure with the blocks or use this Structure Template Tool [**HERE**](https://github.com/)
-
 <Tabs>
 <TabItem value="php" label="PHP">
 
 ```php
 $structure = [ "prompt","comma","openRichContent","video","closeRichContent"];
+
+$pTextArray = ["ttittle text"];
+$vTitleArray = ["video title alternative"];
+$vUrlArray = ["https://www.youtube.com/playlist?list=PLpVijIXbyeMP0ts18S0Qf3qcLPxCp9Pfz"];
 
 $components = [
    [$pTextArray],

@@ -119,7 +119,7 @@ These functions help us to Trigger Text messages that can help to troubleshoot o
 <TabItem value="php" label="PHP">
 
 ```php
-$session = false; || $session = updateSessionParameters($parameters);
+$session = updateSessionParameters($parameters);
 $errorMessage = ["Error Message"];
 
 triggerError($session,$errorMessage);
@@ -136,8 +136,8 @@ triggerError($session,$errorMessage);
 <TabItem value="php" label="PHP">
 
 ```php
-$session = false; || $session = updateSessionParameters($parameters);
-$promptMessage = "Error Message";
+$session = updateSessionParameters($parameters);
+$promptMessage = ["Error Message"];
 
 triggerPrompt($session,$promptMessage);
 ```
@@ -155,8 +155,8 @@ triggerPrompt($session,$promptMessage);
 <TabItem value="php" label="PHP">
 
 ```php
-$session = false; || $session = updateSessionParameters($parameters);
-$phoneNumber = "123456789";)
+$session = updateSessionParameters($parameters);
+$phoneNumber = "123456789";
 
 triggerCall($session, $phoneNumber);
 ```
